@@ -3,7 +3,7 @@ use std::io::{self, Write};
 use std::process::exit;
 
 pub mod command;
-use command::{parse_command, Command};
+use command::{parse_command, Command, KNOWN_COMMANDS};
 
 fn main() {
     // REPL
@@ -22,6 +22,13 @@ fn main() {
                 Command::Unknown => eprintln!("{}: command not found", input),
                 Command::Exit => exit(0),
                 Command::Echo(value) => println!("{}", value),
+                Command::Type(command) => {
+                    if KNOWN_COMMANDS.contains(&command.as_str()) {
+                        println!("{} is a shell builtin", command)
+                    } else {
+                        println!("{} not found", command)
+                    }
+                }
             },
             Err(e) => eprintln!("something went wrong: {}", e),
         }
