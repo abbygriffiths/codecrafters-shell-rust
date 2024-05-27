@@ -3,6 +3,7 @@ use std::io;
 pub enum Command {
     Exit,
     Unknown,
+    Echo(String)
 }
 
 pub fn parse_command(line: &str) -> Result<Command, io::Error> {
@@ -15,6 +16,7 @@ pub fn parse_command(line: &str) -> Result<Command, io::Error> {
 
     match command {
         "exit" => Ok(Command::Exit),
+        "echo" => Ok(Command::Echo(tokens[1..].join(" "))),
         _ => Ok(Command::Unknown),
     }
 }

@@ -21,6 +21,7 @@ fn main() {
             Ok(command) => match command {
                 Command::Unknown => eprintln!("{}: command not found", input),
                 Command::Exit => exit(0),
+                Command::Echo(value) => println!("{}", value),
             },
             Err(e) => eprintln!("something went wrong: {}", e),
         }
